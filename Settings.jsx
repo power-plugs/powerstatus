@@ -1,6 +1,6 @@
 const { React, getModuleByDisplayName } = require('powercord/webpack');
-const { TextInput } = require('powercord/components/settings');
-const { Card, Button, AsyncComponent } = require('powercord/components');
+const { SliderInput } = require('powercord/components/settings');
+const { Card, AsyncComponent } = require('powercord/components');
 const FormText = AsyncComponent.from(getModuleByDisplayName('FormText'));
 const TextArea = require('./TextArea.jsx');
 
@@ -15,9 +15,21 @@ module.exports = class Settings extends React.Component {
     render() {
         return (
             <div>
+              <SliderInput
+                minValue={ 250 }
+                maxValue={ 10000 }
+                markers={[ 250, 1000, 2500, 5000, 7500, 10000 ]}
+                initialValue={this.settings.get('delay')}
+                onValueChange={val => this.settings.set('delay', parseInt(val))}
+                note="Delay in milliseconds between custom status changes"
+                onValueRender={ v => <span>{Math.round(v)} ms</span> }
+              >
+                Update Delay
+              </SliderInput>
               <TextArea
                 value={this.settings.get('statuses')}
                 onChange={val => this.settings.set('statuses', val.toString())}
+                rows={8}
               >
                 Statuses (Newline Separated)
               </TextArea>
