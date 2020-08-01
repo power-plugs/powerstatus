@@ -9,21 +9,21 @@ module.exports = class PowerStatus extends Plugin {
         if (!this.settings.get('statuses'))
           this.settings.set('statuses', '');
         if (!this.settings.get('delay'))
-          this.settings.set('delay', 2500);
+          this.settings.set('delay', 2.5);
+        if (!this.settings.get('enable'))
+          this.settings.set('enable', true);
         
-        var SettingsComponent = () => React.createElement(Settings, {settings: this.settings});
-
         powercord.api.settings.registerSettings('powerstatus', {
             category: this.entityID,
             label: 'Custom Status',
-            render: SettingsComponent
+            render: Settings
         });
 
         this.main();
     }
 
     pluginWillUnload () {
-      powercord.api.settings.unregisterSettings('powerstatus');
+        powercord.api.settings.unregisterSettings('powerstatus');
     }
 
     async main(statuses) {
@@ -32,10 +32,11 @@ module.exports = class PowerStatus extends Plugin {
         if(statuses.length == 0)
             return;
         
-        var delay = parseInt(this.settings.get('delay'));
+        var delay = parseInt(this.settings.get('delay')) * 1000;
         var i = Math.round((new Date()).getTime() / delay) % statuses.length;
         
-        await this.setStatus(statuses[i]);
+        if(this.settings.get('enable'))
+            await this.setStatus(statuses[i]);
         setTimeout(() => {
             this.main(statuses);
         }, delay);
