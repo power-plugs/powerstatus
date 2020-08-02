@@ -10,7 +10,7 @@ module.exports = class PowerStatus extends Plugin {
           this.settings.set('statuses', '');
         if (!this.settings.get('delay'))
           this.settings.set('delay', 2.5);
-        if (!this.settings.get('enable'))
+        if (this.settings.get('enable') == null)
           this.settings.set('enable', true);
         
         powercord.api.settings.registerSettings('powerstatus', {
