@@ -33,6 +33,7 @@ module.exports = class PowerStatus extends Plugin {
             return;
         
         var delay = parseInt(this.settings.get('delay')) * 1000;
+        delay = delay < 1 ? 1 : delay;
         var i = Math.round((new Date()).getTime() / delay) % statuses.length;
         
         if(this.settings.get('enable'))
