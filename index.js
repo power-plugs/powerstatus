@@ -29,7 +29,7 @@ module.exports = class PowerStatus extends Plugin {
     async main(statuses) {
         var stats = this.settings.get('statuses');
         var statuses = stats.split("\n");
-        if(statuses.length == 0)
+        if(statuses.length < 2)
             return;
         
         var delay = parseInt(this.settings.get('delay')) * 1000;
