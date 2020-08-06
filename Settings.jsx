@@ -24,9 +24,9 @@ module.exports = class Settings extends React.Component {
                 maxValue={ 10 }
                 markers={[ 1, 5, 10 ]}
                 initialValue={this.props.getSetting('delay')}
-                onValueChange={val => this.props.updateSetting('delay', parseInt(val))}
+                onValueChange={val => this.props.updateSetting('delay', parseFloat(val))}
                 note="Delay in seconds between custom status changes"
-                onValueRender={ v => <span>{Math.round(v)} s</span> }
+                onValueRender={ v => <span>{Math.round(v*10)/10} s</span> }
               >
                 Update Delay
               </SliderInput>
@@ -39,7 +39,7 @@ module.exports = class Settings extends React.Component {
               </TextArea>
               <Card style={{"padding":"18px"}}>
                 <FormText>
-                  Feel free to check out some of my other plugins on <a href="https://github.com/LilSizzurp?tab=repositories&q=power" target="_BLANK">GitHub</a>!
+                  Feel free to check out some of my other plugins on <a href="https://github.com/power-plugs?tab=repositories" target="_BLANK">GitHub</a>!
                 </FormText>
               </Card>
             </div>
